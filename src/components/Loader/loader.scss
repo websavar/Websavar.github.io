@@ -1,0 +1,123 @@
+@import 'assets/sass/settings.scss';
+
+.loading {
+
+  .overlay {
+    background: white;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    opacity: 0.65;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 998;
+  }
+
+  .row {
+    left: 50%;
+    position: fixed;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+
+    &.loading-spinner {
+      align-items: center;
+      display: flex;
+
+      span {
+        animation: loadingSpin 0.9s linear infinite;
+        border: 0.25em solid transparent;
+        border-color: rgba($color: $color-primary, $alpha: 0.25);
+        border-radius: 50%;
+        border-top-color: $color-primary;
+        height: 80px;
+        margin: $gap-xs;
+        pointer-events: none;
+        width: 80px;
+      }
+    }
+
+    &.loading-gradient span {
+      animation-duration: 1.25s;
+      animation-iteration-count: infinite;
+      animation-fill-mode: forwards;
+      animation-name: placeHolderShimmer;
+      animation-timing-function: linear;
+      background: linear-gradient(to right, #eee 10%, #ddd 18%, #eee 33%);
+      background-size: 800px 104px;
+      border-radius: 3px;
+      display: flex;
+      height: 24px;
+      margin: 15px;
+      width: 220px;
+    }
+
+    &.loading-dots span {
+      animation: three-dots-loader-animation 2s infinite ease-in-out;
+      animation-delay: -0.16s;
+      animation-fill-mode: both;
+      border-radius: 50%;
+      color: $color-primary;
+      display: inline-block;
+      height: 10px;
+      padding: 0;
+      position: relative;
+      width: 10px;
+
+      &:before,
+      &:after {
+        animation: three-dots-loader-animation 2s infinite ease-in-out;
+        border-radius: 50%;
+        content: '';
+        height: 10px;
+        position: absolute;
+        top: 0;
+        width: 10px;
+      }
+
+      &:before {
+        animation-delay: -0.32s;
+        left: -14px;
+      }
+
+      &:after {
+        left: 14px;
+      }
+    }
+  }
+}
+
+@keyframes loadingSpin {
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0
+  }
+
+  100% {
+    background-position: 468px 0
+  }
+}
+
+@keyframes three-dots-loader-animation {
+  0% {
+    opacity: 0;
+  }
+
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 10px 0 -14px;
+  }
+
+  40% {
+    box-shadow: 0 10px 0 0;
+    opacity: 1;
+  }
+}

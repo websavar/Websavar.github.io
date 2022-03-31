@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "types": [
+      "jest",
+      "node",
+      "@testing-library/jest-dom"
+    ],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": "./src",
+    "jsx": "react"
+  },
+  "include": [
+    "./src/tests/*",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "typeAcquisition": {
+    "exclude": [
+      "dotenv"
+    ]
+  },
+  "ts-node": {
+    "moduleTypes": {
+      "jest.config.ts": "cjs"
+    }
+  }
+}

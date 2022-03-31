@@ -1,0 +1,43 @@
+@import 'settings';
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  color: $color-text;
+  font-family: $font-family;
+  height: 100%;
+  margin: 0;
+  padding: 0 !important;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none !important;
+
+  &:hover {
+    color: $color-primary !important;
+  }
+}
+
+* {
+  font-family: $font-family;
+}
+
+.App {
+  color: $color-text;
+  font-size: $font-size;
+  width: 100%;
+}
+
+.spacer {
+  -webkit-box-flex: 1 !important;
+  -ms-flex-positive: 1 !important;
+  flex-grow: 1 !important;
+}

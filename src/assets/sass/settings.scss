@@ -1,0 +1,68 @@
+/* colors */
+
+$color-primary: rgb(35, 231, 165);
+$color-secondary: rgb(246, 174, 30);
+$color-error: rgb(255, 0, 64);
+$color-text: rgb(33, 39, 34);
+$color-dark: rgb(30, 37, 37);
+$color-gray: rgb(240 240 240);
+$color-bg: rgb(22, 19, 3);
+
+/* font styles */
+
+$font-size-xs: 10px;
+$font-size-sm: 12px;
+$font-size: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xlg: 24px;
+$font-size-xxlg: 28px;
+$font-family: 'Manrope',
+"Segoe UI",
+"Roboto",
+sans-serif;
+$font-url: '../fonts/';
+
+@font-face {
+  font-family: 'Manrope';
+  src: url($font-url+'manrope-regular.woff2') format('woff2'),
+    url($font-url+'manrope-regular.woff') format('woff');
+  font-weight: 600;
+  font-display: fallback;
+}
+
+/* dimension */
+
+$gap-xxs: 4px;
+$gap-xs: 8px;
+$gap-sm: 12px;
+$gap: 16px;
+$gap-md: 24px;
+$gap-lg: 32px;
+$gap-xlg: 48px;
+$gap-xxlg: 64px;
+$animation-speed: 1s;
+
+/* common styles */
+
+$navbar-height: 60px;
+$logo-height: 38px;
+$line-height: 1.5;
+
+/* mixin */
+
+@mixin setTransition($transitions...) {
+  -webkit-transition: $transitions;
+  -moz-transition: $transitions;
+  -o-transition: $transitions;
+  -ms-transition: $transitions;
+  transition: $transitions;
+}
+
+@mixin boxShadow($shadow...) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  -o-box-shadow: $shadow;
+  -ms-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
