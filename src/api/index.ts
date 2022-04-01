@@ -13,6 +13,18 @@ class ApiCallCreator {
         console.log(`Error occurred while fetching data from the server ${e}`);
       });
   }
+
+  getPokemon(id: number) {
+    return createApiRequest(
+      `/pokemon/${id}/`,
+      HTTP_METHODS.GET,
+      {}
+    )
+      .then(res => res)
+      .catch((e) => {
+        console.log(`Error occurred while fetching data from the server ${e}`);
+      });
+  }
 }
 
 const api = new ApiCallCreator();

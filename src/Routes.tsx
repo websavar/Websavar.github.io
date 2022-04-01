@@ -8,8 +8,7 @@ import Page404 from "./pages/page404";
 import { PortalName } from "constants/index";
 
 const Routes = () => useRoutes([
-  { path: "/", element: <Pokemons /> },
-  { path: PortalName + '/:id', element: <PokemonDetails /> },
+  { path: '/' + PortalName + '/:id', element: <PokemonDetails /> },
   { path: '*', element: <Page404 /> },
 ]);
 

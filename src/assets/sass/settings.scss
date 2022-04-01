@@ -27,6 +27,13 @@ $font-url: '../fonts/';
   font-family: 'Manrope';
   src: url($font-url+'manrope-regular.woff2') format('woff2'),
     url($font-url+'manrope-regular.woff') format('woff');
+  font-weight: 500;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'ManropeB';
+  src: url($font-url+'manrope-bold.woff') format('woff');
   font-weight: 600;
   font-display: fallback;
 }

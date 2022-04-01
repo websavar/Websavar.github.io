@@ -1,4 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Layout } from './components';
 
@@ -13,7 +14,9 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Layout />
+        <Router>
+          <Layout />
+        </Router>
       </ThemeProvider>
     </div>
   );
