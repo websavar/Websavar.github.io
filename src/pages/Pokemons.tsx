@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { PokemonsInterface } from 'interfaces';
 import { PortalName } from "constants/index";
 import { GetImageById, SetPadStart } from 'helper/utils';
-import './pokemons.scss';
 
 function Pokemons() {
 

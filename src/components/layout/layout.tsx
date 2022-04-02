@@ -18,17 +18,19 @@ const Layout: React.FC = () => {
 
       <main>
         <div className="container-fluid main-container" >
-          <div className='row'>
-            <div className='col-8'>
+          <div className='row h-100'>
+            <div className='col-12 col-sm-6 col-lg-7 col-xl-8'>
               <Pokemons />
             </div>
 
-            <div className='col-4'><Routes /></div>
+            <div className='col-12 col-sm-6 col-lg-5 col-xl-4 order-first order-sm-last p-2'>
+              <Routes />
+            </div>
           </div>
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div >
   );
 }

@@ -1,3 +1,5 @@
+import { PokemonInterface } from 'interfaces';
+
 export const networkLogger = (response: any) => {
   if (response?.config?.url) {
     console.log(response?.config?.baseURL + response?.config?.url);
@@ -32,4 +34,12 @@ export const GetImageById = (id: number): string => {
 
 export const SetPadStart = (num: number): string => {
   return num.toString().padStart(3, "0");
+}
+
+export const GetCurrentGenId = (currGen: PokemonInterface['chain']) => {
+  return currGen.species.url.split("/").slice(-2, -1)[0];
+}
+
+export const PoundToKg = (weight: number) => {
+  return (weight / 10).toFixed(1);
 }

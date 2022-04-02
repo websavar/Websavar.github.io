@@ -3,35 +3,40 @@ export interface PokemonsInterface {
   url: string
 }
 
+interface NameUrl {
+  name: string
+  url: string
+}
+
 export interface PokemonInterface {
   // abilities: string
-  species: {
-    name: string
-    url: string
-  }
+  species: NameUrl
   id: number
   order: number
   weight: number
   imageUrl: string
   types: {
-    type: {
-      name: string
-      url: string
-    }
+    type: NameUrl
   }[]
   stats: {
     base_stat: number
-    stat: {
-      name: string
-    }
+    stat: NameUrl
   }[]
-  evolves_to: {
-    children: {
-      children: any;
-      id: any;
-      name: any;
-    }[];
-    id: number;
-    name: string;
-  }[]
+  chain: {
+    evolves_to: {
+      species: NameUrl
+    }[]
+    species: NameUrl
+  }
 }
+
+export interface EvolutionInterface {
+  children: {
+    children: any;
+    id: any;
+    name: any;
+  }[];
+  id: string;
+  name: string;
+}
+

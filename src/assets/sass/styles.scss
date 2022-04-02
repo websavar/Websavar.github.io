@@ -26,10 +26,6 @@ a {
   }
 }
 
-* {
-  // font-family: $font-family;
-}
-
 .App {
   color: $color-text;
   font-size: $font-size;
@@ -40,4 +36,107 @@ a {
   -webkit-box-flex: 1 !important;
   -ms-flex-positive: 1 !important;
   flex-grow: 1 !important;
+}
+
+
+fieldset.fieldset-card {
+  border: 1px solid rgba($color: $color-dark, $alpha: 0.2);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 12px;
+  position: relative;
+  height: 80%;
+
+  &>legend {
+    background-color: $color-gray;
+    left: $gap;
+    font-size: $font-size;
+    font-weight: bold;
+    padding: 0 5px;
+    position: absolute;
+    top: -13px;
+    width: auto;
+  }
+}
+
+.pokemon-card {
+  border: 1px solid $color-gray;
+  border-radius: 4px;
+  margin: 8px;
+  color: $color-text;
+  @include setTransition(.15s ease-in-out);
+
+  .image-container {
+    background-color: $color-gray;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    width: 100%;
+  }
+
+  .pokemon-name {
+    font-family: 'ManropeB';
+  }
+
+  &:hover {
+    @include boxShadow(0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%));
+    color: $color-secondary;
+    transform: translate3d(0px, -2px, 0px);
+  }
+}
+
+.pokemon-details {
+  background-color: $color-gray;
+  padding: 15px;
+
+  .pokemon-info {
+
+    .pokemon-types {
+      display: flex;
+      font-family: 'ManropeB';
+
+      span {
+        background-color: white ;
+        border-radius: 4px;
+        margin: 0 5px;
+        padding: 2px 6px;
+      }
+    }
+  }
+
+  .pokemon-pic {
+    background-color: rgba($color: white, $alpha: 0.6);
+    border: 1px solid white;
+    border-radius: 8px;
+    margin: 20px 0 30px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .evolution-item {
+    background-color: rgba($color: white, $alpha: 0.6);
+    color: rgba($color: $color-text, $alpha: 0.7);
+    font-family: 'ManropeB';
+    font-size: $font-size-xs;
+    width: 30%;
+
+    @media only screen and (max-width: 769px) {
+      width: 100%;
+    }
+  }
+  
+  .arrow-icon {
+    color: $color-secondary;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 5%;
+
+    svg{
+      font-size: $font-size-lg;
+    }
+  }
 }

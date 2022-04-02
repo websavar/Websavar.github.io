@@ -25,6 +25,18 @@ class ApiCallCreator {
         console.log(`Error occurred while fetching data from the server ${e}`);
       });
   }
+
+  getPokemonEvolution(name: string) {
+    return createApiRequest(
+      `/pokemon-species/${name}`,
+      HTTP_METHODS.GET,
+      {}
+    )
+      .then(res => res)
+      .catch((e) => {
+        console.log(`Error occurred while fetching data from the server ${e}`);
+      });
+  }
 }
 
 const api = new ApiCallCreator();
