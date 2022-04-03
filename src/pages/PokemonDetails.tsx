@@ -4,14 +4,15 @@ import Axios from "axios";
 import api from 'api';
 import { PokemonInterface } from 'interfaces';
 import { GetImageById, SetPadStart } from 'helper/utils';
-import { PokemonEvolutions } from 'components';
+import { PokemonType, PokemonStats, PokemonEvolutions } from 'components';
 import { PoundToKg } from 'helper/utils';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function PokemonsDetails() {
   const { id } = useParams() ?? 1;
   console.log('id', id);
 
-  const [pokeInfo, setPokeInfo] = useState<PokemonInterface>();
+  const [pokemonInfo, setpokemonInfo] = useState<PokemonInterface>();
   const [pokePic, setPokePic] = useState<string>("");
   const [pokeEvolution, setPokeEvolution] = useState<PokemonInterface['chain']>();
 
@@ -20,57 +21,42 @@ function PokemonsDetails() {
       setPokePic(GetImageById(Number(id)));
 
       const fetchData = async (id: number) => {
-        const pokemonObject: any = await api.getPokemon(id);
-
-        setPokeInfo(pokemonObject);
+        const pokemonObject: any = await api.getPokemonById(id);
+        setpokemonInfo(pokemonObject);
 
         const pokeSpecies = await api.getPokemonEvolution(pokemonObject.species.name);
         const pokeEvolution = await Axios.get(pokeSpecies.evolution_chain.url);
-
         setPokeEvolution(pokeEvolution.data.chain);
       }
       fetchData(Number(id));
     }
   }, [id]);
 
-  if (!pokeInfo) return <div>Loading...</div>
+  if (!pokemonInfo) return (
+    <div className="my-4 d-flex justify-content-center align-item-center">
+      <CircularProgress />
+    </div>
+  );
 
   return (
     <div className='pokemon-details h-100'>
       <div className="pokemon-info">
         <div className='d-flex align-items-md-center flex-column flex-md-row mb-3'>
-          <h2 className='me-3'>{pokeInfo.species.name}</h2>
-          <span><strong>ID #{SetPadStart(pokeInfo.id)}</strong></span>
+          <h2 className='me-3'>{pokemonInfo.species.name}</h2>
+          <span><strong>ID #{SetPadStart(pokemonInfo.id)}</strong></span>
         </div>
 
-        <div className='pokemon-types mb-2'>
-          <strong>Type:</strong>
-          {
-            pokeInfo.types.map(item => {
-              return <span key={item.type.name}>{item.type.name}</span>
-            })
-          }
-        </div>
+        <PokemonType pokemonInfo={pokemonInfo} />
 
         <div>
-          <strong>Weight:</strong> {PoundToKg(pokeInfo.weight)} Kg
+          <strong>Weight:</strong> {PoundToKg(pokemonInfo.weight)} Kg
         </div>
 
         <div className="pokemon-pic">
           <img src={pokePic} alt="pic of pokemon" />
         </div>
 
-        <fieldset className='fieldset-card mb-3'>
-          <legend>Stats</legend>
-          {pokeInfo.stats.map((item, index) => {
-            return (
-              <div className='stats col-12 d-flex' key={index}>
-                <div className='col-5'>{item.stat.name}</div>
-                <div className='col-7'>{item.base_stat}</div>
-              </div>
-            )
-          })}
-        </fieldset>
+        <PokemonStats pokemonInfo={pokemonInfo} />
       </div>
 
       {pokeEvolution && <PokemonEvolutions data={pokeEvolution} />}

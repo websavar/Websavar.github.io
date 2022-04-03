@@ -9,11 +9,12 @@ interface NameUrl {
 }
 
 export interface PokemonInterface {
-  // abilities: string
+  name: string
   species: NameUrl
   id: number
   order: number
   weight: number
+  number: string
   imageUrl: string
   types: {
     type: NameUrl
@@ -36,7 +37,7 @@ export interface EvolutionInterface {
     id: any;
     name: any;
   }[];
-  id: string;
+  id: number;
   name: string;
 }
 

@@ -5,7 +5,7 @@ import { PokemonInterface, EvolutionInterface } from 'interfaces';
 import { EvolutionGen } from 'components';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { GetCurrentGenId } from 'helper/utils';
+import { GetIdByUrl } from 'helper/utils';
 
 const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data }) => {
 
@@ -16,7 +16,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
   }, [data]);
 
   function RecursiveBuildChain(currentGen: any): EvolutionInterface {
-    const id = GetCurrentGenId(currentGen);
+    const id = GetIdByUrl(currentGen.species);
     if (!currentGen.evolves_to.length) {
       return {
         children: [],
@@ -25,7 +25,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
       };
     }
 
-    const children = currentGen.evolves_to.map((child: any) => RecursiveBuildChain(child));
+    const children = currentGen.evolves_to.map((child: EvolutionInterface) => RecursiveBuildChain(child));
 
     return {
       children,
@@ -35,7 +35,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
   }
 
   function BuildChain() {
-    const id = GetCurrentGenId(data);
+    const id = GetIdByUrl(data.species);
     const EvolutionChildren = {
       children:
         !data.evolves_to.length
@@ -64,16 +64,16 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
       <div className="d-flex align-items-center flex-column flex-md-row">
         <EvolutionGen evolution={evolution} />
 
-        {ArrowIcon()}
-
         {evolution.children.length > 0 && (
           <>
+            {ArrowIcon()}
             <EvolutionGen evolution={evolution.children[0]} />
 
-            {ArrowIcon()}
-
             {evolution.children[0].children.length > 0 &&
-              <EvolutionGen evolution={evolution.children[0].children[0]} />
+              <>
+                {ArrowIcon()}
+                <EvolutionGen evolution={evolution.children[0].children[0]} />
+              </>
             }
           </>
         )}

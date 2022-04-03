@@ -2,13 +2,12 @@
 
 .app-container {
   display: flex;
-  // height: calc(100% - 100px);
   min-height: 100vh;
   position: relative;
 
-  .main-container {
-    overflow: auto;
+  #main-container {
     height: 100% !important;
+    overflow: hidden;
   }
 }
 
@@ -30,4 +29,3 @@ main {
     }
   }
 }
-

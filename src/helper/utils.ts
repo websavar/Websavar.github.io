@@ -16,18 +16,6 @@ export const networkLogger = (response: any) => {
   console.log({ response });
 };
 
-export const validatestring = (value: string) => {
-  if (
-    value.includes(".") ||
-    value.includes("/") ||
-    value.includes("\\") ||
-    value.includes("^") ||
-    value.includes(",")
-  )
-    return false;
-  else return true;
-};
-
 export const GetImageById = (id: number): string => {
   return "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" + SetPadStart(id) + ".png";
 }
@@ -36,10 +24,16 @@ export const SetPadStart = (num: number): string => {
   return num.toString().padStart(3, "0");
 }
 
-export const GetCurrentGenId = (currGen: PokemonInterface['chain']) => {
-  return currGen.species.url.split("/").slice(-2, -1)[0];
+export const GetIdByUrl = (species: PokemonInterface['species']): number => {
+  return Number(species.url.split("/").slice(-2)[0]);
 }
 
-export const PoundToKg = (weight: number) => {
+export const PoundToKg = (weight: number): string => {
   return (weight / 10).toFixed(1);
 }
+
+export const HasVerticalScrollbar = (): boolean => {
+  const pokemonsContainerHeight = document.querySelector('#pokemons-container>div')!.scrollHeight;
+  const mainContainerHeight = document.querySelector('#main-container')!.scrollHeight;
+  return pokemonsContainerHeight > mainContainerHeight;
+} 

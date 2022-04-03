@@ -1,8 +1,7 @@
 @import 'settings';
 
 html {
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
 }
@@ -23,6 +22,32 @@ a {
 
   &:hover {
     color: $color-primary !important;
+  }
+}
+
+// Scrollbar
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-gray;
+  border: 1px solid rgba($color: $color-text, $alpha: 0.1);
+  margin: 8px 0 21px 0;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba($color: $color-bg, $alpha: 0.7);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 3px solid rgba(0, 0, 0, 0);
+  -webkit-border-radius: 0;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $color-secondary;
   }
 }
 
@@ -60,6 +85,13 @@ fieldset.fieldset-card {
   }
 }
 
+#pokemons-container,
+#pokemon-container {
+  max-height: calc(100% - $navbar-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .pokemon-card {
   border: 1px solid $color-gray;
   border-radius: 4px;
@@ -71,8 +103,13 @@ fieldset.fieldset-card {
     background-color: $color-gray;
     display: flex;
     justify-content: center;
+    min-height: 192px;
     padding: 4px;
     width: 100%;
+
+    img {
+      width: inherit;
+    }
   }
 
   .pokemon-name {
@@ -97,7 +134,7 @@ fieldset.fieldset-card {
       font-family: 'ManropeB';
 
       span {
-        background-color: white ;
+        background-color: white;
         border-radius: 4px;
         margin: 0 5px;
         padding: 2px 6px;
@@ -127,7 +164,7 @@ fieldset.fieldset-card {
       width: 100%;
     }
   }
-  
+
   .arrow-icon {
     color: $color-secondary;
     display: flex;
@@ -135,7 +172,7 @@ fieldset.fieldset-card {
     padding: 0;
     width: 5%;
 
-    svg{
+    svg {
       font-size: $font-size-lg;
     }
   }

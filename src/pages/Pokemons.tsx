@@ -2,46 +2,81 @@ import React, { useState, useEffect } from 'react';
 import api from 'api';
 import { Link } from "react-router-dom";
 import { PokemonsInterface } from 'interfaces';
-import { PortalName } from "constants/index";
-import { GetImageById, SetPadStart } from 'helper/utils';
+import { PortalName, LIMIT, MAX_POKEMONS } from "constants/index";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { PokemonCard } from 'components';
+import CircularProgress from '@mui/material/CircularProgress';
+import { HasVerticalScrollbar } from 'helper/utils';
+
+let offset = 0;
 
 function Pokemons() {
+  // const [loading, setLoading] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [pokemons, setPokemons] = useState<PokemonsInterface[]>([]);
 
-  const [pokedex, setPokedex] = useState<PokemonsInterface[]>([]);
+  const fetchData = async () => {
+    // setLoading(true);
+    let limit = LIMIT;
+    if (offset > MAX_POKEMONS) {
+      limit = LIMIT - (offset - MAX_POKEMONS);
+      setHasMore(false);
+    }
+    const pokeList = await api.getPokemons(limit, offset);
+    offset += LIMIT;
+    setPokemons([...pokemons, ...pokeList]);
+    // setLoading(false);
+  }
 
   useEffect(() => {
-    const fetchData = async (limit: number) => {
-      const data = await api.getPokemons(limit);
-      console.log('Pokemons', data);
+    if (!HasVerticalScrollbar())
+      fetchData();
+  }, [pokemons.length])
 
-      setPokedex(data);
-    }
-    fetchData(10);
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  const pokedexList = pokedex.map((pokemon: PokemonsInterface, index: number) => {
-    return (
-      <Link to={`/${PortalName}/${index + 1}`} className="col-12 col-sm-6 col-md-4 col-lg-3 p-0" key={index}>
-        <div
-          key={SetPadStart(index + 1)}
-          className="d-flex flex-column align-items-center pokemon-card"
-        >
-          <div className='image-container'>
-            <img src={GetImageById(index + 1)} width="100 " alt={pokemon.name} />
-          </div>
-          <span className='pokemon-name'>{pokemon.name}</span>
-          <span>#{SetPadStart(index + 1)}</span>
-        </div>
-      </Link>
-    )
-  });
+  const fetchNextPokemons = () => {
+    setTimeout(() => {
+      fetchData();
+    }, 500);
+  }
 
   return (
-    <div className="row">
-      {/* <div className='col-12 d-flex flex-wrap'> */}
-      {pokedexList}
-      {/* </div> */}
-    </div>
+    <>
+      {
+        <InfiniteScroll
+          style={{ overflow: "none" }}
+          dataLength={pokemons.length}
+          next={fetchNextPokemons}
+          hasMore={hasMore}
+          scrollableTarget={'pokemons-container'}
+          loader={
+            <div className="my-4 d-flex justify-content-center align-item-center">
+              <CircularProgress />
+            </div>
+          }
+          endMessage={
+            <p className="text-center my-3">
+              <strong>You have seen it all!</strong>
+            </p>
+          }
+        >
+          <div className="row">
+            {pokemons.map((pokemon: PokemonsInterface, index: number) => (
+              <Link
+                to={`/${PortalName}/${index + 1}`}
+                className="col-12 col-sm-6 col-md-4 col-lg-3 p-0"
+                key={index + 1}
+              >
+                <PokemonCard pokemon={pokemon} id={index + 1} />
+              </Link>
+            ))}
+          </div>
+        </InfiniteScroll>
+      }
+    </>
   );
 }
 
