@@ -1,7 +1,7 @@
 @import 'assets/sass/settings.scss';
 
 .navbar {
-  background-color: $color-bg;
+  background-color: rgba($color: $color-bg, $alpha: .08);
   border-bottom: 1px solid $color-gray;
   @include boxShadow(0 1px 3px 0 rgba(0, 0, 0, 0.15));
   height: $navbar-height;
@@ -13,127 +13,10 @@
 
   a {
     display: block;
-    height: 38px;
     width: fit-content;
 
     img {
-      height: 35px;
-    }
-  }
-
-  .tabs {
-    padding-left: 10px;
-    width: auto;
-
-    a {
-      color: $color-text;
-      margin: 0 12px 0 0px;
-      min-width: fit-content;
-      padding: 16px 5px;
-      text-transform: capitalize;
-      transition: 0.3s;
-    }
-
-    .MuiTabs-indicator {
-      bottom: 11px;
-    }
-  }
-
-  .search {
-    width: auto;
-    display: flex;
-    justify-content: flex-end;
-    flex-grow: 1;
-
-    &>div {
-      margin-right: 10px;
-    }
-
-    .receivables-list {
-      margin-right: 15px;
-      @include setTransition(0.3s);
-
-      legend {
-        font-size: 0.85em;
-      }
-
-      div {
-        border-radius: 3px;
-      }
-
-      svg[data-testid="CloseIcon"] {
-        // display: none;
-        font-size: $font-size;
-      }
-    }
-
-    // Receivable list
-    .MuiAutocomplete-option {
-      font-size: $font-size;
-      padding: 0 0 0 10px;
-
-      &:hover svg {
-        opacity: 1;
-      }
-
-      svg {
-        font-size: $font-size;
-        opacity: 0;
-      }
-    }
-
-    .MuiFormHelperText-root {
-      position: absolute;
-      bottom: -18px;
-      background: white;
-      font-size: 11px !important;
-      padding: 0 5px;
-    }
-  }
-
-  #first-name {
-    font-weight: bold;
-  }
-
-  #user-button {
-    border-radius: 0;
-    padding: 6.3px 5px;
-    margin-left: 5px;
-  }
-
-  .language-container {
-    max-width: 160px;
-  }
-
-  img.logout {
-    margin-right: 5px;
-    transform: rotate(180deg);
-  }
-
-  .MuiBadge-badge {
-    border-radius: 4px;
-    background-color: $color-primary;
-    padding: 0;
-    height: 17px;
-    top: 3px;
-  }
-}
-
-.user-account .MuiMenu-paper {
-  border-bottom: 2px solid $color-primary;
-  border-radius: 0 !important;
-  left: unset !important;
-  right: 30px !important;
-  top: 55px !important;
-
-  li {
-    color: $color-text;
-    font-size: $font-size;
-    display: flex;
-
-    img.logout {
-      margin-right: 5px;
-      transform: rotate(180deg);
+      height: 56px;
     }
   }
 }

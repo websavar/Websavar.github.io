@@ -55,7 +55,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
       }
     </span>;
 
-  if (!evolution) return <span>Loading...</span>;
+  if (!evolution) return <div>Loading...</div>;
 
   return (
     <div className="mt-2">

@@ -2,7 +2,7 @@ import React from 'react';
 import Routes from 'Routes';
 
 import './layout.scss';
-import { Navbar, Footer } from 'components';
+import { Navbar } from 'components';
 import Pokemons from "pages/Pokemons";
 
 const Layout: React.FC = () => {
@@ -27,8 +27,6 @@ const Layout: React.FC = () => {
           </div>
         </div>
       </main>
-
-      {/* <Footer /> */}
     </div >
   );
 }

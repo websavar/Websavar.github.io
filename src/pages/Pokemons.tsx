@@ -11,12 +11,10 @@ import { HasVerticalScrollbar } from 'helper/utils';
 let offset = 0;
 
 function Pokemons() {
-  // const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [pokemons, setPokemons] = useState<PokemonsInterface[]>([]);
 
   const fetchData = async () => {
-    // setLoading(true);
     let limit = LIMIT;
     if (offset > MAX_POKEMONS) {
       limit = LIMIT - (offset - MAX_POKEMONS);
@@ -25,11 +23,10 @@ function Pokemons() {
     const pokeList = await api.getPokemons(limit, offset);
     offset += LIMIT;
     setPokemons([...pokemons, ...pokeList]);
-    // setLoading(false);
   }
 
   useEffect(() => {
-    if (!HasVerticalScrollbar())
+    if (!HasVerticalScrollbar() && hasMore)
       fetchData();
   }, [pokemons.length])
 

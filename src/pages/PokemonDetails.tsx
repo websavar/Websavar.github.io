@@ -13,7 +13,7 @@ function PokemonsDetails() {
   console.log('id', id);
 
   const [pokemonInfo, setpokemonInfo] = useState<PokemonInterface>();
-  const [pokePic, setPokePic] = useState<string>("");
+  const [pokePic, setPokePic] = useState<string>('');
   const [pokeEvolution, setPokeEvolution] = useState<PokemonInterface['chain']>();
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { EvolutionInterface } from 'interfaces';
 import { GetImageById } from 'helper/utils';
 
+const LazyImg = React.lazy(() => import('../../ImageResource'));
 
 const EvolutionGen: React.FC<{ evolution: EvolutionInterface }> = ({ evolution }) => {
   console.log('EvolutionGen', evolution.name);
@@ -18,9 +19,11 @@ const EvolutionGen: React.FC<{ evolution: EvolutionInterface }> = ({ evolution }
       </div>
       <figure className="m-0">
         <Link to={`/pokemons/${evolution.id}`}>
-          <img
-            src={GetImageById(Number(evolution.id))} width="90"
-            className="border rounded-circle p-1"
+          <LazyImg
+            src={GetImageById(Number(evolution.id))}
+            alt='pokemon evolution'
+            classname='border rounded-circle p-1'
+            width='90'
           />
         </Link>
       </figure>

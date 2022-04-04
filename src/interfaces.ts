@@ -41,3 +41,9 @@ export interface EvolutionInterface {
   name: string;
 }
 
+export interface Image {
+  src: string
+  alt: string
+  classname?: string
+  width?: string
+}
