@@ -1,7 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import { Layout } from './components';
+
+const queryClient = new QueryClient();
 
 const theme = createTheme({
   palette: {
@@ -15,7 +21,9 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          <Layout />
+          <QueryClientProvider client={queryClient}>
+            <Layout />
+          </QueryClientProvider>
         </Router>
       </ThemeProvider>
     </div>

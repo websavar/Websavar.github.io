@@ -1,7 +1,7 @@
 @import 'assets/sass/settings.scss';
 
 .navbar {
-  background-color: rgba($color: $color-bg, $alpha: .08);
+  background-color: $color-tertiary;
   border-bottom: 1px solid $color-gray;
   @include boxShadow(0 1px 3px 0 rgba(0, 0, 0, 0.15));
   height: $navbar-height;
@@ -16,7 +16,7 @@
     width: fit-content;
 
     img {
-      height: 56px;
+      height: 54px;
     }
   }
 }

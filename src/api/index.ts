@@ -1,5 +1,8 @@
 import { HTTP_METHODS } from "constants/enums";
 import { createApiRequest } from "./axios";
+import { useQuery } from "react-query";
+
+const errorHandler = (e: any) => console.log(`Error occurred while fetching data from the server ${e}`);
 
 class ApiCallCreator {
   getPokemons(limit?: number, offset?: number) {
@@ -8,10 +11,8 @@ class ApiCallCreator {
       HTTP_METHODS.GET,
       {}
     )
-      .then(res => res.results)
-      .catch((e) => {
-        console.log(`Error occurred while fetching data from the server ${e}`);
-      });
+      .then(res => res)
+      .catch((e) => errorHandler(e));
   }
 
   getPokemonById(id: number) {
@@ -21,9 +22,7 @@ class ApiCallCreator {
       {}
     )
       .then(res => res)
-      .catch((e) => {
-        console.log(`Error occurred while fetching data from the server ${e}`);
-      });
+      .catch((e) => errorHandler(e));
   }
 
   getPokemonByName(name: string) {
@@ -33,9 +32,7 @@ class ApiCallCreator {
       {}
     )
       .then(res => res)
-      .catch((e) => {
-        console.log(`Error occurred while fetching data from the server ${e}`);
-      });
+      .catch((e) => errorHandler(e));
   }
 
   getPokemonEvolution(name: string) {
@@ -45,11 +42,13 @@ class ApiCallCreator {
       {}
     )
       .then(res => res)
-      .catch((e) => {
-        console.log(`Error occurred while fetching data from the server ${e}`);
-      });
+      .catch((e) => errorHandler(e));
   }
 }
+
+export const UseGetPokemonIndexList = (limit?: number, offset?: number) => {
+  return useQuery("POKEMON_INDEX_LIST", () => api.getPokemons(limit, offset));
+};
 
 const api = new ApiCallCreator();
 

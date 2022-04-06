@@ -16,7 +16,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
   }, [data]);
 
   function RecursiveBuildChain(currentGen: any): EvolutionInterface {
-    const id = GetIdByUrl(currentGen.species);
+    const id = GetIdByUrl(currentGen.species.url);
     if (!currentGen.evolves_to.length) {
       return {
         children: [],
@@ -35,7 +35,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
   }
 
   function BuildChain() {
-    const id = GetIdByUrl(data.species);
+    const id = GetIdByUrl(data.species.url);
     const EvolutionChildren = {
       children:
         !data.evolves_to.length

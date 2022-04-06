@@ -3,78 +3,72 @@ import api from 'api';
 import { Link } from "react-router-dom";
 import { PokemonsInterface } from 'interfaces';
 import { PortalName, LIMIT, MAX_POKEMONS } from "constants/index";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { PokemonCard } from 'components';
 import CircularProgress from '@mui/material/CircularProgress';
-import { HasVerticalScrollbar } from 'helper/utils';
+import { GetIdByUrl } from 'helper/utils';
+import { useQuery } from 'react-query';
+import Pagination from '@mui/material/Pagination';
 
-let offset = 0;
+const Count = Math.ceil(MAX_POKEMONS / LIMIT);
 
-function Pokemons() {
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [pokemons, setPokemons] = useState<PokemonsInterface[]>([]);
+const Pokemons: React.FC = () => {
+  const [limit, setLimit] = useState<number>(LIMIT);
+  const [offset, setOffset] = useState<number>(0);
+  const [page, setPage] = useState(1);
 
-  const fetchData = async () => {
-    let limit = LIMIT;
-    if (offset > MAX_POKEMONS) {
-      limit = LIMIT - (offset - MAX_POKEMONS);
-      setHasMore(false);
-    }
-    const pokeList = await api.getPokemons(limit, offset);
-    offset += LIMIT;
-    setPokemons([...pokemons, ...pokeList]);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    setOffset((value - 1) * limit);
+    // if (value === Count)
+    //   setLimit(MAX_POKEMONS - ((value - 1) * limit));
+  };
+
+  const fetchData = async ({ queryKey }: { queryKey: any }) => {
+    console.log('offset', queryKey[2]);
+    const pokeList = await api.getPokemons(queryKey[1], queryKey[2]);
+    return pokeList.results;
   }
 
-  useEffect(() => {
-    if (!HasVerticalScrollbar() && hasMore)
-      fetchData();
-  }, [pokemons.length])
+  const { data: pokemons, isLoading, error } = useQuery(
+    ['pokemons', (offset + limit) > MAX_POKEMONS ? (MAX_POKEMONS - (offset)) : limit, offset],
+    fetchData,
+    { keepPreviousData: true });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  console.log('pokemons', pokemons);
 
-  const fetchNextPokemons = () => {
-    setTimeout(() => {
-      fetchData();
-    }, 500);
-  }
-
-  return (
-    <>
-      {
-        <InfiniteScroll
-          style={{ overflow: "none" }}
-          dataLength={pokemons.length}
-          next={fetchNextPokemons}
-          hasMore={hasMore}
-          scrollableTarget={'pokemons-container'}
-          loader={
-            <div className="my-4 d-flex justify-content-center align-item-center">
-              <CircularProgress />
-            </div>
-          }
-          endMessage={
-            <p className="text-center my-3">
-              <strong>You have seen it all!</strong>
-            </p>
-          }
-        >
-          <div className="row">
-            {pokemons.map((pokemon: PokemonsInterface, index: number) => (
-              <Link
-                to={`/${PortalName}/${index + 1}`}
-                className="col-12 col-sm-6 col-md-4 col-lg-3 p-0"
-                key={index + 1}
-              >
-                <PokemonCard pokemon={pokemon} id={index + 1} />
-              </Link>
-            ))}
-          </div>
-        </InfiniteScroll>
-      }
-    </>
-  );
+  if (isLoading || pokemons === undefined)
+    return (
+      <div className="my-4 d-flex justify-content-center align-item-center">
+        <CircularProgress />
+      </div>);
+  else if (error)
+    return <div>"An error has occurred: " + {error}</div>;
+  else
+    return (
+      <>
+        <div className="row">
+          {pokemons.map((pokemon: PokemonsInterface, index: number) => (
+            <Link
+              to={`/${PortalName}/${GetIdByUrl(pokemon.url)}`}
+              className='col-12 col-sm-6 col-md-4 col-lg-3 p-0'
+              key={GetIdByUrl(pokemon.url)}
+            // onMouseEnter={}
+            >
+              <PokemonCard pokemon={pokemon} id={GetIdByUrl(pokemon.url)} />
+            </Link>
+          ))}
+        </div>
+        <div className='d-flex justify-content-center mt-2'>
+          <Pagination
+            count={Count}
+            variant='outlined'
+            shape='rounded'
+            page={page}
+            onChange={handleChange}
+          />
+        </div>
+      </>
+    );
 }
 
 export default Pokemons;

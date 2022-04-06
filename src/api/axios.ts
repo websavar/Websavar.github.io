@@ -3,9 +3,9 @@ import { HTTP_METHODS } from "constants/enums";
 import { networkLogger } from '../helper/utils';
 import '../global';
 
-const apiUrl = 'https://pokeapi.co';
+const apiUrl: string = 'https://pokeapi.co';
 const apiVersion = process.env.REACT_APP_API_VERSION;
-const enableNetworkLogger = false;
+const enableNetworkLogger: boolean = false;
 
 const axios = Axios.create({
   baseURL: `${apiUrl}/api/v${apiVersion}/`

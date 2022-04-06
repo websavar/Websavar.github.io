@@ -1,4 +1,5 @@
 import { PokemonInterface } from 'interfaces';
+import api from 'api';
 
 export const networkLogger = (response: any) => {
   if (response?.config?.url) {
@@ -24,8 +25,8 @@ export const SetPadStart = (num: number): string => {
   return num.toString().padStart(3, "0");
 }
 
-export const GetIdByUrl = (species: PokemonInterface['species']): number => {
-  return Number(species.url.split("/").slice(-2)[0]);
+export const GetIdByUrl = (url: string): number => {
+  return Number(url.split("/").slice(-2)[0]);
 }
 
 export const PoundToKg = (weight: number): string => {
@@ -36,4 +37,4 @@ export const HasVerticalScrollbar = (): boolean => {
   const pokemonsContainerHeight = document.querySelector('#pokemons-container>div')!.scrollHeight;
   const mainContainerHeight = document.querySelector('#main-container')!.scrollHeight;
   return pokemonsContainerHeight > mainContainerHeight;
-} 
+}

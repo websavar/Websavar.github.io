@@ -7,8 +7,6 @@ import { GetImageById } from 'helper/utils';
 const LazyImg = React.lazy(() => import('../../ImageResource'));
 
 const EvolutionGen: React.FC<{ evolution: EvolutionInterface }> = ({ evolution }) => {
-  console.log('EvolutionGen', evolution.name);
-
   return (
     <div className='evolution-item d-flex flex-row flex-md-column align-items-center justify-content-around text-center border rounded p-1'>
       <div>

@@ -1,6 +1,9 @@
 export interface PokemonsInterface {
   name: string
   url: string
+  sprites?: {
+    front_default: string
+  }
 }
 
 interface NameUrl {
