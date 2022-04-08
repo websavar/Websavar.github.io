@@ -1,9 +1,9 @@
-# OVERVIEW 
+## OVERVIEW 
   The app is pokedex, it should list pokemon number and name, and displays some basic 
   information about the pokemon to the side when it’s selected; image, name, type(s), 
   stats(HP, Attack, Defence, Speed), and preview of their evolution.
 
-# OVERVIEW 
+## REQUIRED FEATURES  
 1. Use the [https://pokeapi.co](https://pokeapi.co/) API to get any pokemon information you need
 2. Cache your API calls; we should not query the pokemon data a lot.
 3. Smart pre-caching; when a user hovers over a pokemon pre-fetch his data and states, if a
@@ -16,7 +16,7 @@
 - [node-sass](https://www.npmjs.com/package/node-sass): Allows you to natively compile `.scss` files to `css`.
 - [react-query](https://www.npmjs.com/package/react-query): Hooks for fetching, caching and updating asynchronous data in React.
 
-# Setup and Run
+## Setup and Run
 1. Run `npm install` to install required dependencies
 2. Run `npm start` to run the project and Open http://localhost:4000
 4. Launch `Live Server` to prepare to run the test directly in the browser
