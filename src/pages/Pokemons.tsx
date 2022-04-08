@@ -14,7 +14,7 @@ const Pokemons: React.FC = () => {
   return (
     <div className="container-fluid" id='main-container'>
       <div className='row vh-100'>
-        <div className='col-12 col-sm-6 col-lg-7 col-xl-8' id='pokemons-container'>
+        <div className='col-12 col-sm-6 col-lg-7 col-xl-8 mt-3 mt-sm-0' id='pokemons-container'>
           <PokemonsList getPokemonInfo={getPokemonInfo} />
         </div>
 

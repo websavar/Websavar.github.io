@@ -7,3 +7,4 @@ export const placeholder: string = require('assets/images/placeholder.jpg');
 export const LIMIT: number = 12;
 export const MAX_POKEMONS: number = 898;
 export const COUNT = Math.ceil(MAX_POKEMONS / LIMIT);
+export const MOBILE_WIDTH = 576;

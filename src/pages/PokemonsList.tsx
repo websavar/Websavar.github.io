@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { useQueryClient } from "react-query";
-import { PortalName, LIMIT, MAX_POKEMONS, COUNT } from "constants/index";
+import { PortalName, LIMIT, MAX_POKEMONS, COUNT, MOBILE_WIDTH } from "constants/index";
 import { useGetPokemons, useGetPokemon, getPokemonQuery } from 'helper/hooks';
 import { GetIdByUrl } from 'helper/utils';
 import { PokemonCard } from 'components';
@@ -49,6 +49,17 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
     }
   };
 
+  const pagination = <div className='d-flex justify-content-center my-2' id='pagination'>
+    <Pagination
+      size={window.innerWidth < MOBILE_WIDTH ? "small" : 'medium'}
+      count={COUNT}
+      variant='outlined'
+      shape='rounded'
+      page={page}
+      onChange={pageChangeHandler}
+    />
+  </div>;
+
   if (isLoading || pokemons === undefined)
     return (
       <div className="my-4 d-flex justify-content-center align-item-center">
@@ -60,6 +71,8 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
   return (
     <>
       <div className="row">
+        {window.innerWidth < MOBILE_WIDTH && pagination}
+
         {pokemons.map((pokemon: PokemonsInterface) => {
           const id: number = GetIdByUrl(pokemon.url);
           return (
@@ -76,15 +89,8 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
           );
         })}
       </div>
-      <div className='d-flex justify-content-center my-2' id='pagination'>
-        <Pagination
-          count={COUNT}
-          variant='outlined'
-          shape='rounded'
-          page={page}
-          onChange={pageChangeHandler}
-        />
-      </div>
+
+      {pagination}
     </>
   );
 }

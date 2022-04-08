@@ -8,6 +8,10 @@
   #main-container {
     height: 100% !important;
     overflow: hidden;
+
+    @media only screen and (max-width: 576px) {
+      overflow: auto;
+    }
   }
 }
 

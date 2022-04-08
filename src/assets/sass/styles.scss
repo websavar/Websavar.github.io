@@ -90,6 +90,12 @@ fieldset.fieldset-card {
   max-height: calc(100% - $navbar-height - 25px);
   overflow-x: hidden;
   overflow-y: auto;
+
+  @media screen and (max-width: 576px) {
+    max-height: unset;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }
 
 %hover {
