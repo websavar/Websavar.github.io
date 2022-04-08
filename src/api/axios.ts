@@ -1,13 +1,13 @@
-import Axios from "axios";
+import Axios, { AxiosInstance } from "axios";
 import { HTTP_METHODS } from "constants/enums";
 import { networkLogger } from '../helper/utils';
 import '../global';
 
 const apiUrl: string = 'https://pokeapi.co';
-const apiVersion = process.env.REACT_APP_API_VERSION;
+const apiVersion: string = process.env.REACT_APP_API_VERSION ?? '2';
 const enableNetworkLogger: boolean = false;
 
-const axios = Axios.create({
+const axios: AxiosInstance = Axios.create({
   baseURL: `${apiUrl}/api/v${apiVersion}/`
 });
 

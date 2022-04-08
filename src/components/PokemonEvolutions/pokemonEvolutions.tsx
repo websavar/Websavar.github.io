@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { PokemonInterface, EvolutionInterface } from 'interfaces';
-
 import { EvolutionGen } from 'components';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { ArrowForwardIcon, ArrowDownwardIcon } from 'mui';
 import { GetIdByUrl } from 'helper/utils';
 
 const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data }) => {
@@ -12,6 +10,19 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
   const [evolution, setEvolution] = useState<EvolutionInterface>();
 
   useEffect(() => {
+    function BuildChain() {
+      const id: number = GetIdByUrl(data.species.url);
+      const EvolutionChildren = {
+        children:
+          !data.evolves_to.length
+            ? []
+            : data.evolves_to.map((e) => RecursiveBuildChain(e)),
+        id,
+        name: data.species.name,
+      };
+      setEvolution(EvolutionChildren);
+    }
+
     BuildChain();
   }, [data]);
 
@@ -31,21 +42,8 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
       children,
       id,
       name: currentGen.species.name,
-    };
-  }
-
-  function BuildChain() {
-    const id = GetIdByUrl(data.species.url);
-    const EvolutionChildren = {
-      children:
-        !data.evolves_to.length
-          ? []
-          : data.evolves_to.map((e) => RecursiveBuildChain(e)),
-      id,
-      name: data.species.name,
-    };
-    setEvolution(EvolutionChildren);
-  }
+    }
+  };
 
   const ArrowIcon = () =>
     <span className="arrow-icon">

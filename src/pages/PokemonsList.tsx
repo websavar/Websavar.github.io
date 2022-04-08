@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { PortalName, LIMIT, MAX_POKEMONS, COUNT } from "constants/index";
 import { useGetPokemons, useGetPokemon, getPokemonQuery } from 'helper/hooks';
 import { GetIdByUrl } from 'helper/utils';
 import { PokemonCard } from 'components';
-import CircularProgress from '@mui/material/CircularProgress';
-import Pagination from '@mui/material/Pagination';
+import { CircularProgress, Pagination } from 'mui';
 import { PokemonsInterface, PokemonProps } from 'interfaces';
 
 const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
@@ -16,6 +15,15 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
   const [pokemonId, setPokemonId] = useState<number>(1);
 
   const queryClient = useQueryClient();
+  const { id } = useParams();
+
+  useEffect(() => {
+    function resetList() {
+      setOffset(0);
+      setPage(1);
+    }
+    if (pokemons && !id) resetList();
+  }, [id]);
 
   const pageChangeHandler = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);

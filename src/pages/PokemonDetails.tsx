@@ -5,7 +5,7 @@ import { PokemonInterface } from 'interfaces';
 import { GetImageById, SetPadStart, PoundToKg } from 'helper/utils';
 import { usePrevious, getPokemonQuery, getPokemonSpeciesQuery, getPokemonEvolutionQuery } from 'helper/hooks';
 import { PokemonType, PokemonStats, PokemonEvolutions } from 'components';
-import CircularProgress from '@mui/material/CircularProgress';
+import { CircularProgress } from 'mui';
 
 const PokemonsDetails: React.FC<{ pokemonData: PokemonInterface | undefined }> = ({ pokemonData }) => {
   const { id } = useParams() ?? 1;
@@ -33,13 +33,16 @@ const PokemonsDetails: React.FC<{ pokemonData: PokemonInterface | undefined }> =
       if (data) setPokemonInfo(data);
     };
 
+    const prevId = prevAmount?.id;
+    const prevData = prevAmount?.pokemonData;
+
     if (!id) {
       fetchQuery(1);
     }
-    else if (prevAmount?.pokemonData !== pokemonData) {
+    else if (prevData !== pokemonData) {
       setPokemonInfo(pokemonData)
     }
-    else if (id && (prevAmount?.id !== id || !prevAmount?.id)) {
+    else if (id && (prevId !== id || !prevId)) {
       fetchQuery(Number(id));
     }
   }, [id, pokemonData]);

@@ -1,5 +1,6 @@
 import React from "react";
 import './navbar.scss';
+import { Link } from 'react-router-dom';
 
 import { LogoUrl } from 'constants/index';
 
@@ -9,9 +10,9 @@ const Navbar: React.FC = () => {
       <div className="container-fluid d-flex align-items-center justify-content-center">
 
         <div className="col-12 col-sm-1">
-          <a aria-expanded="false" href={process.env.REACT_APP_BASE_URL} tabIndex={1}>
+          <Link to={process.env.REACT_APP_BASE_URL!}>
             <img src={LogoUrl} alt="logo" />
-          </a>
+          </Link>
         </div>
 
       </div>

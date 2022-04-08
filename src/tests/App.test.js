@@ -1,6 +1,7 @@
 import { MAX_POKEMONS } from 'constants/index';
 
 const puppeteer = require('puppeteer');
+const { installMouseHelper } = require('./install-mouse-helper');
 
 function delay(time) {
   return new Promise(resolve => setTimeout(resolve, time));
@@ -19,18 +20,19 @@ beforeAll(async () => {
     }
   );
   page = await browser.newPage();
+  await installMouseHelper(page);
 })
 
 describe('Pokemons', () => {
   test('selects Pokemons number #2 and #10, and displays the pokemon details', async () => {
     await page.goto(appUrlBase)
-    await delay(2000)
+    await delay(3000)
     await page.waitForSelector('#id-2')
     await page.click('#id-2')
     await delay(2000)
     await page.waitForSelector('#id-10')
     await page.click('#id-10')
-  }, 12000)
+  }, 16000)
 
   test('selects pokemon from Evolutions (last evolution)', async () => {
     await delay(3000)

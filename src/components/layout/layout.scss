@@ -21,11 +21,6 @@ main {
   position: relative;
 
   &>div {
-    padding: .8rem;
-
-    .header-common {
-      font-family: 'FSMatthewB';
-      font-size: $font-size-md;
-    }
+    padding: .6rem;
   }
 }

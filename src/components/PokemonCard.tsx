@@ -1,31 +1,16 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { GetImageById, SetPadStart } from 'helper/utils';
 import { PokemonsInterface } from 'interfaces';
 import { placeholder } from 'constants/index';
-import api from 'api';
 
 const LazyImg = React.lazy(() => import('./ImageResource'));
 
 const PokemonCard: React.FC<{ pokemon: PokemonsInterface, id: number }> = ({ pokemon, id }) => {
-  // const [data, setData] = useState<PokemonsInterface>()
-
-  // const fetchData = async () => {
-  //   const response = await api.getPokemonById(id);
-  //   setData(response);
-  // }
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [id]);
-  // console.log('sprites', data);
-
-  // if (!data) return <div>Loding...</div>
 
   return (
     <div className="d-flex flex-column align-items-center pokemon-card">
       <div className='image-container'>
         <Suspense fallback={<img src={placeholder} width='100px' alt='placeholder' />}>
-          {/* <LazyImg src={data.sprites?.front_default!} alt={data.name} /> */}
           <LazyImg src={GetImageById(id)} alt={pokemon.name} />
         </Suspense>
       </div>

@@ -11,8 +11,6 @@ const Pokemons: React.FC = () => {
     setPokemonInfo(data);
   }
 
-  console.log('Pokemons-pokemonInfo', pokemonInfo);
-
   return (
     <div className="container-fluid" id='main-container'>
       <div className='row vh-100'>
