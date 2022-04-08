@@ -16,7 +16,7 @@ const EvolutionGen: React.FC<{ evolution: EvolutionInterface }> = ({ evolution }
         </span>
       </div>
       <figure className="m-0">
-        <Link to={`/pokemons/${evolution.id}`}>
+        <Link to={`/pokemons/${evolution.id}`} id={'id-evo-' + evolution.id}>
           <LazyImg
             src={GetImageById(Number(evolution.id))}
             alt='pokemon evolution'

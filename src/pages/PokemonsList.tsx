@@ -52,19 +52,23 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
   return (
     <>
       <div className="row">
-        {pokemons.map((pokemon: PokemonsInterface) => (
-          <Link
-            to={`/${PortalName}/${GetIdByUrl(pokemon.url)}`}
-            className='col-12 col-sm-6 col-md-4 col-lg-3 p-0'
-            key={GetIdByUrl(pokemon.url)}
-            onMouseEnter={() => setPokemonId(GetIdByUrl(pokemon.url))}
-            onClick={() => onMouseClick(GetIdByUrl(pokemon.url))}
-          >
-            <PokemonCard pokemon={pokemon} id={GetIdByUrl(pokemon.url)} />
-          </Link>
-        ))}
+        {pokemons.map((pokemon: PokemonsInterface) => {
+          const id: number = GetIdByUrl(pokemon.url);
+          return (
+            <Link
+              to={`/${PortalName}/${id}`}
+              className='col-12 col-sm-6 col-md-4 col-lg-3 p-0'
+              id={'id-' + id.toString()}
+              key={id}
+              onMouseEnter={() => setPokemonId(id)}
+              onClick={() => onMouseClick(id)}
+            >
+              <PokemonCard pokemon={pokemon} id={id} />
+            </Link>
+          );
+        })}
       </div>
-      <div className='d-flex justify-content-center my-2'>
+      <div className='d-flex justify-content-center my-2' id='pagination'>
         <Pagination
           count={COUNT}
           variant='outlined'

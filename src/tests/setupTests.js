@@ -22,3 +22,5 @@ global.navigator = {
 
 const nodeCrypto = require('crypto');
 global.crypto = nodeCrypto;
+
+jest.setTimeout(30000);

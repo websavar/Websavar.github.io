@@ -61,7 +61,7 @@ const PokemonEvolutions: React.FC<{ data: PokemonInterface['chain'] }> = ({ data
     <div className="mt-2">
       <strong>Evolutions</strong>
 
-      <div className="d-flex align-items-center flex-column flex-md-row">
+      <div className="d-flex align-items-center flex-column flex-md-row mt-1">
         <EvolutionGen evolution={evolution} />
 
         {evolution.children.length > 0 && (

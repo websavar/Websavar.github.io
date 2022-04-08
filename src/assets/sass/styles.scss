@@ -92,6 +92,12 @@ fieldset.fieldset-card {
   overflow-y: auto;
 }
 
+%hover {
+  @include boxShadow(0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%));
+  color: $color-secondary;
+  transform: translate3d(0px, -2px, 0px);
+}
+
 .pokemon-card {
   border: 1px solid $color-gray;
   border-radius: 4px;
@@ -118,9 +124,7 @@ fieldset.fieldset-card {
   }
 
   &:hover {
-    @include boxShadow(0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%));
-    color: $color-secondary;
-    transform: translate3d(0px, -2px, 0px);
+    @extend %hover;
   }
 }
 
@@ -155,11 +159,16 @@ fieldset.fieldset-card {
   }
 
   .evolution-item {
+    @include setTransition(.15s ease-in-out);
     background-color: rgba($color: white, $alpha: 0.6);
     color: rgba($color: $color-text, $alpha: 0.7);
     font-family: 'ManropeB';
     font-size: $font-size-xs;
     width: 30%;
+
+    &:hover {
+      @extend %hover;
+    }
 
     @media only screen and (max-width: 769px) {
       width: 100%;
