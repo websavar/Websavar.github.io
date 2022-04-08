@@ -53,9 +53,9 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
     return (
       <div className="my-4 d-flex justify-content-center align-item-center">
         <CircularProgress />
-      </div>);
-  else if (error)
-    return <div>"An error has occurred: " + {error}</div>;
+      </div>)
+
+  else if (error) return <div>"An error has occurred"</div>;
 
   return (
     <>
