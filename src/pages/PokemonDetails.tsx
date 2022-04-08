@@ -1,36 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import Axios from "axios";
-import api from 'api';
+import { useQueryClient } from 'react-query';
 import { PokemonInterface } from 'interfaces';
-import { GetImageById, SetPadStart } from 'helper/utils';
+import { GetImageById, SetPadStart, PoundToKg } from 'helper/utils';
+import { usePrevious, getPokemonQuery, getPokemonSpeciesQuery, getPokemonEvolutionQuery } from 'helper/hooks';
 import { PokemonType, PokemonStats, PokemonEvolutions } from 'components';
-import { PoundToKg } from 'helper/utils';
 import CircularProgress from '@mui/material/CircularProgress';
 
-function PokemonsDetails() {
+const PokemonsDetails: React.FC<{ pokemonData: PokemonInterface | undefined }> = ({ pokemonData }) => {
   const { id } = useParams() ?? 1;
-  console.log('id', id);
+  const queryClient = useQueryClient();
 
-  const [pokemonInfo, setpokemonInfo] = useState<PokemonInterface>();
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface | undefined>(pokemonData);
   const [pokePic, setPokePic] = useState<string>('');
   const [pokeEvolution, setPokeEvolution] = useState<PokemonInterface['chain']>();
 
   useEffect(() => {
-    if (id) {
-      setPokePic(GetImageById(Number(id)));
-
-      const fetchData = async (id: number) => {
-        const pokemonObject: any = await api.getPokemonById(id);
-        setpokemonInfo(pokemonObject);
-
-        const pokeSpecies = await api.getPokemonEvolution(pokemonObject.species.name);
-        const pokeEvolution = await Axios.get(pokeSpecies.evolution_chain.url);
-        setPokeEvolution(pokeEvolution.data.chain);
-      }
-      fetchData(Number(id));
+    const fetchEvo = async (): Promise<void> => {
+      setPokePic(GetImageById(pokemonInfo!.id));
+      const pokeSpecies = await getPokemonSpeciesQuery(queryClient, pokemonInfo!.species.name);
+      const pokeEvolution = await getPokemonEvolutionQuery(queryClient, pokeSpecies.evolution_chain.url);
+      setPokeEvolution(pokeEvolution.data.chain);
     }
-  }, [id]);
+    if (pokemonInfo) fetchEvo();
+  }, [pokemonInfo]);
+
+  const prevAmount = usePrevious({ id, pokemonData });
+
+  useEffect(() => {
+    const fetchQuery = async (id: number): Promise<void> => {
+      const data = await getPokemonQuery(queryClient, id);
+      if (data) setPokemonInfo(data);
+    };
+
+    if (!id) {
+      fetchQuery(1);
+    }
+    else if (prevAmount?.pokemonData !== pokemonData) {
+      setPokemonInfo(pokemonData)
+    }
+    else if (id && (prevAmount?.id !== id || !prevAmount?.id)) {
+      fetchQuery(Number(id));
+    }
+  }, [id, pokemonData]);
+
 
   if (!pokemonInfo) return (
     <div className="my-4 d-flex justify-content-center align-item-center">

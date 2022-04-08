@@ -1,74 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import api from 'api';
-import { Link } from "react-router-dom";
-import { PokemonsInterface } from 'interfaces';
-import { PortalName, LIMIT, MAX_POKEMONS } from "constants/index";
-import { PokemonCard } from 'components';
-import CircularProgress from '@mui/material/CircularProgress';
-import { GetIdByUrl } from 'helper/utils';
-import { useQuery } from 'react-query';
-import Pagination from '@mui/material/Pagination';
+import React, { useState } from 'react';
+import { PokemonInterface } from 'interfaces';
 
-const Count = Math.ceil(MAX_POKEMONS / LIMIT);
+import PokemonsList from "pages/PokemonsList";
+import PokemonDetails from "pages/PokemonDetails";
 
 const Pokemons: React.FC = () => {
-  const [limit, setLimit] = useState<number>(LIMIT);
-  const [offset, setOffset] = useState<number>(0);
-  const [page, setPage] = useState(1);
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    setOffset((value - 1) * limit);
-    // if (value === Count)
-    //   setLimit(MAX_POKEMONS - ((value - 1) * limit));
-  };
-
-  const fetchData = async ({ queryKey }: { queryKey: any }) => {
-    console.log('offset', queryKey[2]);
-    const pokeList = await api.getPokemons(queryKey[1], queryKey[2]);
-    return pokeList.results;
+  const getPokemonInfo = (data: PokemonInterface): void => {
+    setPokemonInfo(data);
   }
 
-  const { data: pokemons, isLoading, error } = useQuery(
-    ['pokemons', (offset + limit) > MAX_POKEMONS ? (MAX_POKEMONS - (offset)) : limit, offset],
-    fetchData,
-    { keepPreviousData: true });
+  console.log('Pokemons-pokemonInfo', pokemonInfo);
 
-  console.log('pokemons', pokemons);
+  return (
+    <div className="container-fluid" id='main-container'>
+      <div className='row vh-100'>
+        <div className='col-12 col-sm-6 col-lg-7 col-xl-8' id='pokemons-container'>
+          <PokemonsList getPokemonInfo={getPokemonInfo} />
+        </div>
 
-  if (isLoading || pokemons === undefined)
-    return (
-      <div className="my-4 d-flex justify-content-center align-item-center">
-        <CircularProgress />
-      </div>);
-  else if (error)
-    return <div>"An error has occurred: " + {error}</div>;
-  else
-    return (
-      <>
-        <div className="row">
-          {pokemons.map((pokemon: PokemonsInterface, index: number) => (
-            <Link
-              to={`/${PortalName}/${GetIdByUrl(pokemon.url)}`}
-              className='col-12 col-sm-6 col-md-4 col-lg-3 p-0'
-              key={GetIdByUrl(pokemon.url)}
-            // onMouseEnter={}
-            >
-              <PokemonCard pokemon={pokemon} id={GetIdByUrl(pokemon.url)} />
-            </Link>
-          ))}
+        <div className='col-12 col-sm-6 col-lg-5 col-xl-4 order-first order-sm-last p-2' id='pokemon-container'>
+          <PokemonDetails pokemonData={pokemonInfo} />
         </div>
-        <div className='d-flex justify-content-center mt-2'>
-          <Pagination
-            count={Count}
-            variant='outlined'
-            shape='rounded'
-            page={page}
-            onChange={handleChange}
-          />
-        </div>
-      </>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default Pokemons;

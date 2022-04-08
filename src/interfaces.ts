@@ -50,3 +50,7 @@ export interface Image {
   classname?: string
   width?: string
 }
+
+export interface PokemonProps {
+  getPokemonInfo: (arg: PokemonInterface) => void
+}

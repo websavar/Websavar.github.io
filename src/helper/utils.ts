@@ -1,6 +1,3 @@
-import { PokemonInterface } from 'interfaces';
-import api from 'api';
-
 export const networkLogger = (response: any) => {
   if (response?.config?.url) {
     console.log(response?.config?.baseURL + response?.config?.url);
