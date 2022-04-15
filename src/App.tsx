@@ -7,7 +7,13 @@ import {
 
 import { Layout } from './components';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 const theme = createTheme({
   palette: {

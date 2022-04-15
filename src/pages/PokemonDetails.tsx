@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useQueryClient } from 'react-query';
 import { PokemonInterface } from 'interfaces';
 import { GetImageById, SetPadStart, PoundToKg } from 'helper/utils';
+import { DefaultPokemonId } from "constants/index";
+
 import { usePrevious, getPokemonQuery, getPokemonSpeciesQuery, getPokemonEvolutionQuery } from 'helper/hooks';
 import { PokemonType, PokemonStats, PokemonEvolutions } from 'components';
 import { CircularProgress } from 'mui';
@@ -36,14 +38,17 @@ const PokemonsDetails: React.FC<{ pokemonData: PokemonInterface | undefined }> =
     const prevId = prevAmount?.id;
     const prevData = prevAmount?.pokemonData;
 
+    // When click on logo in header or refresh the home page
     if (!id) {
-      fetchQuery(1);
+      fetchQuery(DefaultPokemonId);
     }
+    // when refresh the page and url includes an id
+    else if (prevId !== id || !prevId) {
+      fetchQuery(Number(id));
+    }
+    // when click on a card in list
     else if (prevData !== pokemonData) {
       setPokemonInfo(pokemonData)
-    }
-    else if (id && (prevId !== id || !prevId)) {
-      fetchQuery(Number(id));
     }
   }, [id, pokemonData]);
 

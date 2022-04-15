@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { useQueryClient } from "react-query";
-import { PortalName, LIMIT, MAX_POKEMONS, COUNT, MOBILE_WIDTH } from "constants/index";
+import { PortalName, LIMIT, MAX_POKEMONS, COUNT, MOBILE_WIDTH, DefaultPokemonId } from "constants/index";
 import { useGetPokemons, useGetPokemon, getPokemonQuery } from 'helper/hooks';
 import { GetIdByUrl } from 'helper/utils';
 import { PokemonCard } from 'components';
 import { CircularProgress, Pagination } from 'mui';
 import { PokemonsInterface, PokemonProps } from 'interfaces';
 
-const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
+const PokemonsList: React.FC<PokemonProps> = ({ passPokemonInfo }) => {
 
   const [offset, setOffset] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
-  const [pokemonId, setPokemonId] = useState<number>(1);
+  const [pokemonId, setPokemonId] = useState<number>(DefaultPokemonId);
 
   const queryClient = useQueryClient();
   const { id } = useParams();
 
   useEffect(() => {
-    function resetList() {
-      setOffset(0);
+    // when page number > 1 and clicks on logo
+    if (id === undefined) {
       setPage(1);
+      setOffset(0);
+      return;
     }
-    if (pokemons && !id) resetList();
+    // when page number > 1 and refresh the page
+    const pageNumber = Math.ceil(Number(id) / LIMIT);
+    const offsetNumner = (pageNumber - 1) * LIMIT;
+    if (pageNumber !== page) {
+      setPage(pageNumber);
+      setOffset(offsetNumner);
+    }
   }, [id]);
 
   const pageChangeHandler = (_: React.ChangeEvent<unknown>, value: number) => {
@@ -37,12 +45,16 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
 
   const { data: pokemonInfo, isFetched } = useGetPokemon(pokemonId);
 
-  const onMouseClick = async (id: number) => {
-    if (pokemonInfo && isFetched) getPokemonInfo(pokemonInfo);
+  const onCardClick = async (id: number) => {
+    const isFetchedOnHover: boolean = Boolean(pokemonInfo) && isFetched;
+    if (isFetchedOnHover) {
+      passPokemonInfo(pokemonInfo!);
+      return;
+    }
 
     try {
       const data = await getPokemonQuery(queryClient, id);
-      if (data) getPokemonInfo(data);
+      if (data) passPokemonInfo(data);
     }
     catch (error) {
       console.log(error);
@@ -70,9 +82,9 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
 
   return (
     <>
-      <div className="row">
-        {window.innerWidth < MOBILE_WIDTH && pagination}
+      {window.innerWidth < MOBILE_WIDTH && pagination}
 
+      <div className="row">
         {pokemons.map((pokemon: PokemonsInterface) => {
           const id: number = GetIdByUrl(pokemon.url);
           return (
@@ -82,7 +94,7 @@ const PokemonsList: React.FC<PokemonProps> = ({ getPokemonInfo }) => {
               id={'id-' + id.toString()}
               key={id}
               onMouseEnter={() => setPokemonId(id)}
-              onClick={() => onMouseClick(id)}
+              onClick={() => onCardClick(id)}
             >
               <PokemonCard pokemon={pokemon} id={id} />
             </Link>

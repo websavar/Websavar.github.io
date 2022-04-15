@@ -52,5 +52,5 @@ export interface Image {
 }
 
 export interface PokemonProps {
-  getPokemonInfo: (arg: PokemonInterface) => void
+  passPokemonInfo: (arg: PokemonInterface) => void
 }

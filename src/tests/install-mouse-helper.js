@@ -54,11 +54,11 @@ async function installMouseHelper(page) {
       }, true);
       document.addEventListener('mousedown', event => {
         updateButtons(event.buttons);
-        box.classList.add('button-' + event.which);
+        box.classList.add('button-' + event.button);
       }, true);
       document.addEventListener('mouseup', event => {
         updateButtons(event.buttons);
-        box.classList.remove('button-' + event.which);
+        box.classList.remove('button-' + event.button);
       }, true);
       function updateButtons(buttons) {
         for (let i = 0; i < 5; i++)
