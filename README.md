@@ -1,3 +1,5 @@
+[Online demo](https://pokemon-hamid.netlify.app/)
+
 ## OVERVIEW 
   The app is pokedex, it should list pokemon number and name, and displays some basic 
   information about the pokemon to the side when it’s selected; image, name, type(s), 
